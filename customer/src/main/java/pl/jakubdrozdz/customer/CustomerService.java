@@ -3,7 +3,7 @@ package pl.jakubdrozdz.customer;
 import org.springframework.stereotype.Service;
 
 @Service
-public record CustomerService() {
+public record CustomerService(CustomerRepository customerRepository) {
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
                 .firstName(customerRegistrationRequest.firstName())
@@ -12,6 +12,6 @@ public record CustomerService() {
                 .build();
         //todo: validate email
         //todo: check if email not used
-        //todo: store in db
+        customerRepository.save(customer);
     }
 }
