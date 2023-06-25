@@ -2,6 +2,7 @@ package pl.jakubdrozdz.fraud;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import pl.jakubdrozdz.clients.fraud.FraudCheckResponse;
 
 @RestController
 @RequestMapping("api/v1/fraud-check")

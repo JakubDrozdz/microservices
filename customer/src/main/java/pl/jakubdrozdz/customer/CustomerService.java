@@ -1,9 +1,11 @@
 package pl.jakubdrozdz.customer;
 
 import org.springframework.stereotype.Service;
+import pl.jakubdrozdz.clients.fraud.FraudCheckResponse;
+import pl.jakubdrozdz.clients.fraud.FraudClient;
 
 @Service
-public record CustomerService(CustomerRepository customerRepository, CustomerConfig customerConfig) {
+public record CustomerService(CustomerRepository customerRepository, FraudClient fraudClient) {
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
                 .firstName(customerRegistrationRequest.firstName())
@@ -13,11 +15,7 @@ public record CustomerService(CustomerRepository customerRepository, CustomerCon
         //todo: validate email
         //todo: check if email not used
         customerRepository.saveAndFlush(customer);
-        FraudCheckResponse fraudCheckResponse = customerConfig.restTemplate().getForObject(
-                "http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
-        );
+        FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
         if(fraudCheckResponse.isFraudster()){
             customerRepository.delete(customer);
             throw new IllegalStateException("fraudster");
