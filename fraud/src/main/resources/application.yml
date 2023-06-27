@@ -31,3 +31,10 @@ management:
       probability: 1.0
     propagation:
       type: w3c
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    prometheus:
+      enabled: true

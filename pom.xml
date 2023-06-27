@@ -77,6 +77,11 @@
       <artifactId>zipkin-reporter-brave</artifactId>
       <version>2.16.4</version>
     </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>
