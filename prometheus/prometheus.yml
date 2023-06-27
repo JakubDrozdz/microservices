@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+
+rule_files:
+  - alert.yml
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['127.0.0.1:9090']
+  - job_name: 'customer-service'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['docker.for.mac.localhost:8888']
+  - job_name: 'fraud1-service'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['docker.for.mac.localhost:9988']
+  - job_name: 'fraud2-service'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['docker.for.mac.localhost:8181']

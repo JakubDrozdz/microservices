@@ -34,6 +34,26 @@ services:
       - "9411:9411"
     networks:
       - spring
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-microservices
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - spring
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana-microservices
+    volumes:
+      - grafana:/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - spring
 #  rabbitmq:
 #    image: rabbitmq:3.9.11-management-alpine
 #    container_name: rabbitmq
@@ -117,3 +137,5 @@ networks:
 volumes:
   postgres:
   pgadmin:
+  prometheus-data:
+  grafana:

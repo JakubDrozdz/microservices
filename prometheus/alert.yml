@@ -1,0 +1,12 @@
+groups:
+  - name: DemoAlerts
+    rules:
+      - alert: Customer-Service-Down
+        expr: up{job="customer-service"} < 1
+        for: 1m
+      - alert: Fraud1-Service-Down
+        expr: up{job="fraud1-service"} < 1
+        for: 1m
+      - alert: Fraud2-Service-Down
+        expr: up{job="fraud2-service"} < 1
+        for: 1m
