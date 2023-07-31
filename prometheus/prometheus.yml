@@ -20,4 +20,4 @@ scrape_configs:
   - job_name: 'fraud2-service'
     metrics_path: /actuator/prometheus
     static_configs:
-      - targets: ['docker.for.mac.localhost:8181']
+      - targets: [ 'docker.for.mac.localhost:9111' ]
