@@ -10,3 +10,6 @@ groups:
       - alert: Fraud2-Service-Down
         expr: up{job="fraud2-service"} < 1
         for: 1m
+      - alert: Notification-Service-Down
+        expr: up{job="notification-service"} < 1
+        for: 1m
