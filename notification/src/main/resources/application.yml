@@ -7,7 +7,7 @@ spring:
   datasource:
     username: 'microservices'
     password: 'microservices'
-    url: jdbc:postgresql://localhost:5432/fraud
+    url: jdbc:postgresql://localhost:5432/notification
   jpa:
     properties:
       hibernate:
@@ -38,3 +38,7 @@ management:
   endpoint:
     prometheus:
       enabled: true
+
+sender:
+  mail:
+    "test_properties@test.test"
