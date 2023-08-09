@@ -13,3 +13,6 @@ groups:
       - alert: Notification-Service-Down
         expr: up{job="notification-service"} < 1
         for: 1m
+      - alert: APIGW-Service-Down
+        expr: up{job="apigw-service"} < 1
+        for: 1m
