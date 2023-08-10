@@ -1,21 +1,16 @@
 server:
-  port: 8782
+  port: 80
 
 spring:
   application:
-    name: notification
-  datasource:
-    username: 'microservices'
-    password: 'microservices'
-    url: jdbc:postgresql://localhost:5432/notification
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: 'true'
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: 'true'
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: customer
+          uri: lb://customer
+          predicates:
+            - Path=/api/v1/customers/**
 
 eureka:
   client:
@@ -40,7 +35,3 @@ management:
   endpoint:
     prometheus:
       enabled: true
-
-sender:
-  mail:
-    "test_properties@test.test"
