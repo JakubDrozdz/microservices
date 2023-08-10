@@ -54,15 +54,15 @@ services:
       - "3000:3000"
     networks:
       - spring
-#  rabbitmq:
-#    image: rabbitmq:3.9.11-management-alpine
-#    container_name: rabbitmq
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    networks:
-#      - spring
-#
+  rabbitmq:
+    image: micdenny/rabbitmq-windows:3.6.9
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - spring
+
 #  eureka-server:
 #    image: amigoscode/eureka-server:latest
 #    container_name: eureka-server

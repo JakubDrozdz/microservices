@@ -2,6 +2,7 @@ package pl.jakubdrozdz.customer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.jakubdrozdz.amqp.RabbitMQMessageProducer;
 import pl.jakubdrozdz.clients.fraud.FraudCheckResponse;
 import pl.jakubdrozdz.clients.fraud.FraudClient;
 import pl.jakubdrozdz.clients.notification.NotificationClient;
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 @Slf4j
 public record CustomerService(CustomerRepository customerRepository, FraudClient fraudClient,
-                              NotificationClient notificationClient) {
+                              NotificationClient notificationClient, RabbitMQMessageProducer rabbitMQMessageProducer) {
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
                 .firstName(customerRegistrationRequest.firstName())
@@ -38,13 +39,16 @@ public record CustomerService(CustomerRepository customerRepository, FraudClient
             throw new UserNotValidatedException("API ERROR");
         }
 
-        //todo: make it async
-        notificationClient.sendNotification(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getEmail(),
-                        String.format("Customer %s %s has been registered", customer.getFirstName(), customer.getLastName())
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Customer %s %s has been registered", customer.getFirstName(), customer.getLastName())
+        );
+
+        rabbitMQMessageProducer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key"
         );
     }
 
