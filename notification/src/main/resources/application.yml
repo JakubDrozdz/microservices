@@ -16,6 +16,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: 'true'
+  rabbitmq:
+    addresses: localhost:5672
 
 eureka:
   client:
@@ -23,6 +25,13 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     hostname: localhost
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key
 
 logging:
   pattern:
