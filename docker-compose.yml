@@ -55,7 +55,7 @@ services:
     networks:
       - spring
   rabbitmq:
-    image: micdenny/rabbitmq-windows:3.6.9
+    image: rabbitmq:3.12.2-management-alpine
     container_name: rabbitmq
     ports:
       - "5672:5672"
