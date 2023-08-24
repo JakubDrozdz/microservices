@@ -53,3 +53,9 @@ management:
 sender:
   mail:
     "test_properties@test.test"
+
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+  api-docs:
+    path: /api-docs

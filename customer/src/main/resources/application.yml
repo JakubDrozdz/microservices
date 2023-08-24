@@ -42,3 +42,9 @@ management:
   endpoint:
     prometheus:
       enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+  api-docs:
+    path: /api-docs

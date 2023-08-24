@@ -6,11 +6,44 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: customer
           uri: lb://customer
           predicates:
-            - Path=/api/v1/customers/**
+            - Path=/api/v1/customers/**, /customer/**
+          filters:
+            - RewritePath=/customer/(?<path>.*), /$\{path}
+        - id: fraud
+          uri: lb://fraud
+          predicates:
+            - Path=/api/v1/fraud-check/**, /fraud/**
+          filters:
+            - RewritePath=/fraud/(?<path>.*), /$\{path}
+        - id: notification
+          uri: lb://notification
+          predicates:
+            - Path=/api/v1/notification/**, /notification/**
+          filters:
+            - RewritePath=/notification/(?<path>.*), /$\{path}
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/api-docs/**
+          filters:
+            - RewritePath=/api-docs/(?<path>.*), /$\{path}/api-docs
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+    urls:
+      - name: customer
+        url: /api-docs/customer
+      - name: fraud
+        url: /api-docs/fraud
+      - name: notification
+        url: /api-docs/notification
 
 eureka:
   client:

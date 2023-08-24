@@ -7,6 +7,7 @@ import pl.jakubdrozdz.clients.fraud.FraudCheckResponse;
 @RestController
 @RequestMapping("api/v1/fraud-check")
 @Slf4j
+@CrossOrigin(origins = "http://localhost")
 public record FraudCheckController(FraudCheckService fraudCheckService) {
     @GetMapping(path="{customerId}")
     public FraudCheckResponse isFraudster(@PathVariable("customerId") Integer customerId){
